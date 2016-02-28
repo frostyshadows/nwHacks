@@ -1,8 +1,14 @@
 package com.tigeroakes.pacmanmaps;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -20,8 +26,10 @@ public class Ghost {
     double ghostSizeX;
     double ghostSizeY;
     Marker ghostMarker;
+    Context context;
 
-    public Ghost(double minY, double maxY, double minX, double maxX, double playerRadius, LatLng playerPos, GoogleMap mMap) {
+    public Ghost(double minY, double maxY, double minX, double maxX, double playerRadius, LatLng playerPos, GoogleMap mMap
+    , Context context) {
         // Constructor
         random = new Random();
 
@@ -32,6 +40,8 @@ public class Ghost {
         double playerDist;
         ghostSizeX = 0.5;
         ghostSizeY = 0.5;
+
+        this.context = context;
 
         int cyclesRan = 0;
         //playerRadius is the minimum distance the ghost can be from the player in order for the ghost to spawn
@@ -55,6 +65,11 @@ public class Ghost {
 
         // the marker on the map of the ghost
         ghostMarker = mMap.addMarker(new MarkerOptions().position(pos).title("Ghost"));
+
+        Drawable myDrawable = context.getDrawable(R.mipmap.ghost);
+        Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+        BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
+        ghostMarker.setIcon(bmDescriptor);
     }
 
    public LatLng getLatLng() {

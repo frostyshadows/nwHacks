@@ -1,5 +1,8 @@
 package com.tigeroakes.pacmanmaps;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -7,6 +10,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
@@ -52,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
 		for (int i = 0; i<4; i++) {
-			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap);
+			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap, this.getApplicationContext());
 		}
 	}
 
@@ -90,6 +95,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			pos = lPos;
 			marker = mMap.addMarker(new MarkerOptions()
 					.position(pos));
+			Drawable myDrawable = getResources().getDrawable(R.drawable.pellet_dot);
+			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
+			marker.setIcon(bmDescriptor);
 			//TODO: Add icon and anchor
 		}
 	}
