@@ -8,9 +8,11 @@ import android.graphics.Canvas;
 import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -207,6 +209,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	public ArrayList<Pellet> placePellets(double spacing, ArrayList<Polyline> paths) {
 		ArrayList<Pellet> pellets = new ArrayList<>();
+		Log.d("PList", "func called");
 		for (Polyline path : paths) {
 			List<LatLng> points = path.getPoints();
 			double distanceLeft = 0;
