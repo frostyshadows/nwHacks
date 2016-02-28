@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -38,7 +40,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	private GoogleMap mMap;
 	private TextView textView;
-	private static Score score;
+	private Score score;
 	private List<Ghost> ghosts;
 	private Player player;
 	private LocationManager lm;
@@ -59,7 +61,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		textView.setVisibility(View.VISIBLE);
 		textView.setText("Score: 0");
 
-		score = new Score();
+		score = Score.getInstance();
 		// TODO: 0, 0 shouldn't be the right coordinates
 
 
@@ -81,10 +83,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 				updateText();
 				player.updatePlayer(location.getLatitude(), location.getLongitude());
 
+<<<<<<< HEAD
 
 				// TODO: ghosts should move
 				// TODO: player should move
 				// TODO: ghost should move
+=======
+				for (Ghost next: ghosts){
+					next.update(player.getMarker());
+				}
+>>>>>>> b11a09ce4cc6c825901a52b006969e139ac59b4d
 			}
 
 			@Override
@@ -109,7 +117,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	}
 
-
 	/**
 	 * Manipulates the map once available.
 	 * This callback is triggered when the map is ready to be used.
@@ -123,11 +130,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
 		ghosts = new ArrayList<Ghost>();
-		// Add a marker in Sydney and move the camera
+		// Add a marker in UBC and move the camera
 		LatLng ubc = new LatLng(49.262249, -123.249820);
 		mMap.addMarker(new MarkerOptions().position(ubc).title("Marker in UBC"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(ubc));
-		player = new Player(mMap, 0, 0);
+		player = new Player(mMap, 0, 0, getDrawable(R.drawable.pacman));
 		for (int i = 0; i < 4; i++) {
 			Ghost ghost = new Ghost(ubc.longitude - .03, ubc.longitude + .03, ubc.latitude - .03, ubc.latitude + .03, .01, ubc, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
@@ -148,23 +155,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	}
 
-//	@Override
-//	public void onLocationChanged(Location location) {
-//		updateText();
-//		player.updatePlayer(location.getLatitude(), location.getLongitude());
-//
-////		for (Ghost next: ghosts){
-////			next.update();
-////		}
-//		// TODO: ghosts should move
-//		// TODO: player should move
-//		// TODO: ghost should move
-//
-//	}
-
 	public void updateText(){
 		String text = String.valueOf(score.GetScore());
-		textView.setText(text);
+		textView.setText("Score: " + text);
 	}
 
 	public class Navigator {
@@ -288,10 +281,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		public Pellet(LatLng lPos) {
 			pos = lPos;
+
+
+			marker = mMap.addMarker(new MarkerOptions().position(pos));
+			Drawable myDrawable = getResources().getDrawable(R.drawable.pellet_dot);
+			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
+			marker.setIcon(bmDescriptor);
+			marker.setAnchor(0.5f, 0.5f);
+
 			marker = mMap.addMarker(new MarkerOptions()
 					.position(pos)
 					.icon(getBitmap(R.drawable.pellet_dot))
 					.anchor(0.5f, 0.5f));
+
+			Log.d("String", "Pellet created");
 		}
 
 		private BitmapDescriptor getBitmap(int id) {
@@ -309,24 +313,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			return BitmapDescriptorFactory.fromBitmap(bm);
 		}
 	}
-	public class Score {
-		public int InitialScore = 0;
-		public int scoreSoFar;
-
-		public Score() {
-			scoreSoFar = InitialScore;
-		}
-
-		public void AddScore(int score) {
-			scoreSoFar =+ score;
-		}
-
-		public int GetScore() {
-			return scoreSoFar;
-		}
-
-
-	}
+//	public class Score {
+//		public int InitialScore = 0;
+//		public int scoreSoFar;
+//
+//		public Score() {
+//			scoreSoFar = InitialScore;
+//		}
+//
+//		public void AddScore(int score) {
+//			scoreSoFar =+ score;
+//		}
+//
+//		public int GetScore() {
+//			return scoreSoFar;
+//		}
+//
+//
+//	}
 
 
 	// moved it to separate folder
