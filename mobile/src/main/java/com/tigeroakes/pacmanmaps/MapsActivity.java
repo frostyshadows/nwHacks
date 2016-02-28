@@ -1,5 +1,6 @@
 package com.tigeroakes.pacmanmaps;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -11,6 +12,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -47,24 +50,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	}
 
 	class PlayingArea {
-		public LatLng[] area;
+		public ArrayList<LatLng> area;
 		public Polygon polygon;
 
 		// Generates playing area for game, based on the starting position.
 		public PlayingArea(LatLng startPos) {
 			//TODO: Replace stub code
-			area = new LatLng[4];
-			area[0] = new LatLng(-123.25207469999998,49.26244859999999);
-			area[1] = new LatLng(-123.2511789,49.261457899999996);
-			area[2] = new LatLng(-123.2495534,49.261773);
-			area[3] = new LatLng(-123.2505405,49.262945699999996);
+			area.add(new LatLng(-123.25207469999998,49.26244859999999));
+			area.add(new LatLng(-123.2511789,49.261457899999996));
+			area.add(new LatLng(-123.2495534,49.261773));
+			area.add(new LatLng(-123.2505405,49.262945699999996));
 
 			//TODO: Create Polygon item with coordinates
 		}
 
 		//Check if item is within the playing area
 		public boolean withinArea(LatLng marker) {
-
+			return false;
 		}
 	}
 
