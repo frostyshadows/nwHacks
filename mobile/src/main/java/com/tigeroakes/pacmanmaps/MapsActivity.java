@@ -83,16 +83,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 				updateText();
 				player.updatePlayer(location.getLatitude(), location.getLongitude());
 
-<<<<<<< HEAD
-
 				// TODO: ghosts should move
 				// TODO: player should move
 				// TODO: ghost should move
-=======
-				for (Ghost next: ghosts){
-					next.update(player.getMarker());
-				}
->>>>>>> b11a09ce4cc6c825901a52b006969e139ac59b4d
 			}
 
 			@Override
@@ -283,12 +276,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			pos = lPos;
 
 
-			marker = mMap.addMarker(new MarkerOptions().position(pos));
+			/*marker = mMap.addMarker(new MarkerOptions().position(pos));
 			Drawable myDrawable = getResources().getDrawable(R.drawable.pellet_dot);
 			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
 			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
 			marker.setIcon(bmDescriptor);
-			marker.setAnchor(0.5f, 0.5f);
+			marker.setAnchor(0.5f, 0.5f);*/
 
 			marker = mMap.addMarker(new MarkerOptions()
 					.position(pos)

@@ -13,7 +13,7 @@ public class Score {
     }
 
     public static Score getInstance(){
-        if (instance.equals(null)){
+        if (instance == null){
             instance = new Score();
         }
         return instance;
