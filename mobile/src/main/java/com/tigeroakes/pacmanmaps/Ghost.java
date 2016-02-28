@@ -21,7 +21,7 @@ import java.util.Random;
 
 public class Ghost {
     private LatLng pos;
-    private int speed;
+    private double speed;
     private Random random;
     double ghostSizeX;
     double ghostSizeY;
@@ -32,7 +32,7 @@ public class Ghost {
     , Context context) {
         // Constructor
         random = new Random();
-
+        speed = 0.01;
 
         double ghostX = 0;
         double ghostY = 0;
@@ -86,6 +86,7 @@ public class Ghost {
         //this code should make the ghost move exactly towards the player
         double speedX = (distX/(Math.abs(distX) + Math.abs(distY))) * speed;
         double speedY = (distY/(Math.abs(distX)+ Math.abs(distY)))* speed;
+
 
         //this code is placeholder and does not work yet because i dont know how to find the time passed since last update
         //PLACEHOLDER CODE

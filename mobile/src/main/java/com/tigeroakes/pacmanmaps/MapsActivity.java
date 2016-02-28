@@ -45,6 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.d("String", "Created map");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_maps);
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -74,6 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, new LocationListener() {
 			@Override
 			public void onLocationChanged(Location location) {
+				Log.d("String", "Location changed");
 				updateText();
 				player.updatePlayer(location.getLatitude(), location.getLongitude());
 
