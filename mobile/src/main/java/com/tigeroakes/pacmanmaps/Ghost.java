@@ -45,6 +45,10 @@ public class Ghost {
         // above code should make it so the ghost won't spawn within player radius
     }
 
+   public LatLng getLatLng() {
+       return pos;
+   }
+
     public void update(LatLng playerPos) {
         //TODO: figure out how to find time passed since last pos update and test this code
 

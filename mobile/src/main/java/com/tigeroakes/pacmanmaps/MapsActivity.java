@@ -15,10 +15,13 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
 	private GoogleMap mMap;
+	private List<Ghost> ghosts;
+	private List<Marker> ghostMarkers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		LatLng sydney = new LatLng(-34, 151);
 		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+		for (int i = 0; i < 4; i++){
+			// TODO: figure out arguments!!
+			Ghost ghost = new Ghost(0, 0, 0, 0, 0, new LatLng(0, 0));
+			Marker marker = mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+			marker.setPosition(ghost.getLatLng());
+			marker.setIcon(R.mipmap.ghost);
+
+		}
+
 	}
 
 	class PlayingArea {
