@@ -124,7 +124,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			return scoreSoFar;
 		}
 
+		//public boolean checkIfOver() {
 
+
+
+
+	}
+
+	public class Life{
+		private int initialLife = 3;
+		private int lifeLeft;
+
+		public Life(){
+			lifeLeft = initialLife;
+		}
+
+		public int getLifeleft(){
+			return lifeLeft;
+		}
 	}
 
 	class Player {
