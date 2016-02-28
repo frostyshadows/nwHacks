@@ -40,15 +40,12 @@ public class Ghost {
         } while (playerDist < playerRadius && cyclesRan < 200);
 
         if (cyclesRan > 200) {
-            //TODO:throw error here
+            //TODO:throw error here because this means that the box radius was probably smaller than the minimum range you can spawn a ghost
         }
         // above code should make it so the ghost won't spawn within player radius
     }
 
     public void update(LatLng playerPos) {
-        //TODO: uncomment out all of this code when can find out how much time has passed since last update and can make ghost and player coords successfully
-
-
         //TODO: figure out how to find time passed since last pos update and test this code
 
         //calc dist between ghost and player
