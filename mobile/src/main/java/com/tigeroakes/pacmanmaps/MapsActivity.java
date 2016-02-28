@@ -1,6 +1,5 @@
 package com.tigeroakes.pacmanmaps;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -14,14 +13,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.ResourceProxy;
-
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
-
-	private TextOverlay textOverlay;
 
 	private GoogleMap mMap;
 
@@ -33,14 +27,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map);
 		mapFragment.getMapAsync(this);
-		createTextOverlay();
 	}
 
-	private void createTextOverlay() {
-		ResourceProxy rp = new DefaultResourceProxyImpl(this);
-		//TODO: get text argument later
-		textOverlay = new TextOverlay(rp, "Hello World");
-	}
 
 	/**
 	 * Manipulates the map once available.
@@ -83,7 +71,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		public boolean withinArea(LatLng marker) {
 			return false;
 		}
-
 	}
 
 	public class Pellet {
@@ -100,8 +87,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	class Player {
 		private LatLng pos;
-
-
 
 		//TODO: Track player location
 	}

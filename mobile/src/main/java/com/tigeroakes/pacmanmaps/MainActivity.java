@@ -55,14 +55,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.new_button:
-				Intent i = new Intent(this, MapsActivity.class);
-				startActivity(i);
 			case R.id.how_to_play_button:
-				Intent j = new Intent(this, HowToPlay.class);
-				startActivity(j);
+				Intent i = new Intent(this, HowToPlay.class);
+				startActivity(i);
 			case R.id.about_button:
-				Intent k = new Intent(this, About.class);
-				startActivity(k);
+				Intent j = new Intent(this, About.class);
+				startActivity(j);
 			case R.id.settings:
 		}
 
