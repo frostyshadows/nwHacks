@@ -1,8 +1,17 @@
 package com.tigeroakes.pacmanmaps;
 
+import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Random;
 
@@ -16,14 +25,23 @@ public class Ghost {
     private Random random;
     double ghostSizeX;
     double ghostSizeY;
+    Marker ghostMarker;
+    Context context;
 
-    public Ghost(double minY, double maxY, double minX, double maxX, double playerRadius, LatLng playerPos) {
+    public Ghost(double minY, double maxY, double minX, double maxX, double playerRadius, LatLng playerPos, GoogleMap mMap
+    , Context context) {
         // Constructor
-        double ghostX;
-        double ghostY;
+        random = new Random();
+
+
+        double ghostX = 0;
+        double ghostY = 0;
+
         double playerDist;
         ghostSizeX = 0.5;
         ghostSizeY = 0.5;
+
+        this.context = context;
 
         int cyclesRan = 0;
         //playerRadius is the minimum distance the ghost can be from the player in order for the ghost to spawn
@@ -32,6 +50,7 @@ public class Ghost {
             // makes the ghost a uniformly distributed random position in between minX, maxX for x and minY, maxY for y
             ghostX = (random.nextDouble() * (maxX - minX)) + minX;
             ghostY = (random.nextDouble() * (maxY - minY)) + minY;
+
             pos = new LatLng(ghostX, ghostY);
             double distX = Math.abs(ghostX - playerPos.latitude);
             double distY = Math.abs(ghostY - playerPos.longitude);
@@ -43,7 +62,19 @@ public class Ghost {
             //TODO:throw error here because this means that the box radius was probably smaller than the minimum range you can spawn a ghost
         }
         // above code should make it so the ghost won't spawn within player radius
+
+        // the marker on the map of the ghost
+        ghostMarker = mMap.addMarker(new MarkerOptions().position(pos).title("Ghost"));
+
+        Drawable myDrawable = context.getDrawable(R.mipmap.ghost);
+        Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+        BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
+        ghostMarker.setIcon(bmDescriptor);
     }
+
+   public LatLng getLatLng() {
+       return pos;
+   }
 
     public void update(LatLng playerPos) {
         //TODO: figure out how to find time passed since last pos update and test this code

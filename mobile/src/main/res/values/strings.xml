@@ -7,5 +7,6 @@
 	<string name="action_settings">Action Settings</string>
 	<string name="title_activity_maps">Idk</string>
 	<string name="about_text">created by the hacker squad at nwhacks :D</string>
-	<string name="how_to_play_text">You\'re PacMan and you\'re being chased by ghosts</string>
+	<string name="how_to_play_text">You're PacMan and you're being chased by ghosts</string>
+	<string name="score_text">Score:</string>
 </resources>
