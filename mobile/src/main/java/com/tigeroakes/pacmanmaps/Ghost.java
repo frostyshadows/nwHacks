@@ -2,7 +2,10 @@ package com.tigeroakes.pacmanmaps;
 
 import android.graphics.RectF;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Random;
 
@@ -16,11 +19,16 @@ public class Ghost {
     private Random random;
     double ghostSizeX;
     double ghostSizeY;
+    Marker ghostMarker;
 
-    public Ghost(double minY, double maxY, double minX, double maxX, double playerRadius, LatLng playerPos) {
+    public Ghost(double minY, double maxY, double minX, double maxX, double playerRadius, LatLng playerPos, GoogleMap mMap) {
         // Constructor
-        double ghostX;
-        double ghostY;
+        random = new Random();
+
+
+        double ghostX = 0;
+        double ghostY = 0;
+
         double playerDist;
         ghostSizeX = 0.5;
         ghostSizeY = 0.5;
@@ -32,6 +40,7 @@ public class Ghost {
             // makes the ghost a uniformly distributed random position in between minX, maxX for x and minY, maxY for y
             ghostX = (random.nextDouble() * (maxX - minX)) + minX;
             ghostY = (random.nextDouble() * (maxY - minY)) + minY;
+
             pos = new LatLng(ghostX, ghostY);
             double distX = Math.abs(ghostX - playerPos.latitude);
             double distY = Math.abs(ghostY - playerPos.longitude);
@@ -43,6 +52,9 @@ public class Ghost {
             //TODO:throw error here because this means that the box radius was probably smaller than the minimum range you can spawn a ghost
         }
         // above code should make it so the ghost won't spawn within player radius
+
+        // the marker on the map of the ghost
+        ghostMarker = mMap.addMarker(new MarkerOptions().position(pos).title("Ghost"));
     }
 
    public LatLng getLatLng() {

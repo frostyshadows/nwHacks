@@ -53,6 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		LatLng sydney = new LatLng(-34, 151);
 		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+<<<<<<< HEAD
 		for (int i = 0; i < 4; i++){
 			// TODO: figure out arguments!!
 			Ghost ghost = new Ghost(0, 0, 0, 0, 0, new LatLng(0, 0));
@@ -62,6 +63,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		}
 
+=======
+
+		for (int i = 0; i<4; i++) {
+			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap);
+		}
+>>>>>>> b5f240b841e663c860858d1e9af756c82e7b9932
 	}
 
 	class PlayingArea {
