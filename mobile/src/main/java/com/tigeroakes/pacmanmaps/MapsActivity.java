@@ -14,9 +14,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+import org.osmdroid.DefaultResourceProxyImpl;
+import org.osmdroid.ResourceProxy;
+
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
+	private TextOverlay textOverlay;
 
 	private GoogleMap mMap;
 
@@ -28,8 +33,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map);
 		mapFragment.getMapAsync(this);
+		createTextOverlay();
 	}
 
+	private void createTextOverlay() {
+		ResourceProxy rp = new DefaultResourceProxyImpl(this);
+		//TODO: get text argument later
+		textOverlay = new TextOverlay(rp, "Hello World");
+	}
 
 	/**
 	 * Manipulates the map once available.
@@ -70,9 +81,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		//Check if item is within the playing area
 		public boolean withinArea(LatLng marker) {
-
 			return false;
 		}
+
 	}
 
 	public class Pellet {

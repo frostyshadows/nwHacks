@@ -26,4 +26,6 @@ dependencies {
 	compile 'com.android.support:appcompat-v7:23.2.0'
 	compile 'com.google.android.gms:play-services:8.4.0'
 	compile 'com.android.support:design:23.2.0'
+	compile 'org.osmdroid:osmdroid-android:5.1@aar' // TODO: I just added this line for the TextOverlay class
+	                                     // so if the app odoesn't work properly this might be why
 }
