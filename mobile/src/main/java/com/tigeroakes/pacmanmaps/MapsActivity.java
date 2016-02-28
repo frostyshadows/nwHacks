@@ -79,9 +79,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 				updateText();
 				player.updatePlayer(location.getLatitude(), location.getLongitude());
 
-//		for (Ghost next: ghosts){
-//			next.update();
-//		}
+				for (Ghost next: ghosts){
+					next.update(player.getMarker());
+				}
 				// TODO: ghosts should move
 				// TODO: player should move
 				// TODO: ghost should move
@@ -125,7 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(ubc));
 		player = new Player(mMap, 0, 0);
 		for (int i = 0; i < 4; i++) {
-			Ghost ghost = new Ghost(ubc.longitude - 3, ubc.longitude + 3, ubc.latitude - 3, ubc.latitude + 3, 1, ubc, mMap, this.getApplicationContext());
+			Ghost ghost = new Ghost(ubc.longitude - .03, ubc.longitude + .03, ubc.latitude - .03, ubc.latitude + .03, .01, ubc, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
 		}
 		Paths paths = new Paths(mMap);
@@ -269,12 +269,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		public Pellet(LatLng lPos) {
 			pos = lPos;
+<<<<<<< HEAD
 			marker = mMap.addMarker(new MarkerOptions().position(pos));
 			Drawable myDrawable = getResources().getDrawable(R.drawable.pellet_dot);
 			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
 			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
 			marker.setIcon(bmDescriptor);
 			marker.setAnchor(0.5f, 0.5f);
+=======
+			marker = mMap.addMarker(new MarkerOptions()
+					.position(pos)
+					.icon(getBitmap(R.drawable.pellet_dot))
+					.anchor(0.5f, 0.5f));
+
+			Log.d("String", "Pellet created");
+>>>>>>> f2eccba13ce11781d87d8ef667fdab04d8c8e1f0
 		}
 
 		private BitmapDescriptor getBitmap(int id) {
