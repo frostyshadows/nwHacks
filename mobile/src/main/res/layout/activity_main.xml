@@ -44,11 +44,6 @@
 					android:layout_width="match_parent"
 					android:layout_height="match_parent"
 					android:text="@string/about_label"/>
-				<Button
-					android:id="@+id/settings"
-					android:layout_width="match_parent"
-					android:layout_height="match_parent"
-					android:text="@string/settings_label"/>
 		</LinearLayout>
 	</LinearLayout>
 </LinearLayout>
