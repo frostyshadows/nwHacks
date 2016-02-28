@@ -27,10 +27,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map);
 		mapFragment.getMapAsync(this);
-<<<<<<< HEAD
 		// createTextOverlay();
-=======
->>>>>>> c41baeac51aa02fcc80ed179f5b97d3fb07356f2
+
 	}
 
 

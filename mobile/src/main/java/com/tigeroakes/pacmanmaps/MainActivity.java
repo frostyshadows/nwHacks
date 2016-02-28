@@ -1,5 +1,6 @@
 package com.tigeroakes.pacmanmaps;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +9,11 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends Activity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 	public void onClick(View v) {
 		switch (v.getId()) {
 			case R.id.new_button:
-			case R.id.how_to_play_button:
-				Intent i = new Intent(this, HowToPlay.class);
+				Intent i = new Intent(this, MapsActivity.class);
 				startActivity(i);
-			case R.id.about_button:
-				Intent j = new Intent(this, About.class);
+				break;
+			case R.id.how_to_play_button:
+				Intent j = new Intent(this, HowToPlay.class);
 				startActivity(j);
+				break;
+			case R.id.about_button:
+				Intent k = new Intent(this, About.class);
+				startActivity(k);
+				break;
 			case R.id.settings:
 		}
 
