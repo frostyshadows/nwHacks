@@ -83,6 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 					.position(pos));
 			//TODO: Add icon and anchor
 		}
+
 	}
 	public class Score {
 		public int InitialScore = 0;
@@ -106,6 +107,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	class Player {
 		private LatLng pos;
 		public int PointPerPellet = 100;
+
+		public void EatPellet(Pellet food) {
+
+		}
 
 
 		//TODO: Track player location
