@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -13,6 +15,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -52,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		mapFragment.getMapAsync(this);
 		// createTextOverlay();
 		textView = (TextView) findViewById(R.id.score_id);
+		textView.setVisibility(View.VISIBLE);
 		textView.setText("Score: 0");
 
 		score = new Score();
@@ -69,15 +73,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			// for ActivityCompat#requestPermissions for more details.
 			return;
 		}
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, new LocationListener() {
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, new LocationListener() {
 			@Override
 			public void onLocationChanged(Location location) {
 				updateText();
 				player.updatePlayer(location.getLatitude(), location.getLongitude());
 
-//		for (Ghost next: ghosts){
-//			next.update();
-//		}
+				for (Ghost next: ghosts){
+					next.update(player.getMarker());
+				}
 				// TODO: ghosts should move
 				// TODO: player should move
 				// TODO: ghost should move
@@ -121,7 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(ubc));
 		player = new Player(mMap, 0, 0);
 		for (int i = 0; i < 4; i++) {
-			Ghost ghost = new Ghost(ubc.longitude - 3, ubc.longitude + 3, ubc.latitude - 3, ubc.latitude + 3, 1, ubc, mMap, this.getApplicationContext());
+			Ghost ghost = new Ghost(ubc.longitude - .03, ubc.longitude + .03, ubc.latitude - .03, ubc.latitude + .03, .01, ubc, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
 		}
 		Paths paths = new Paths(mMap);
@@ -279,10 +283,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		public Pellet(LatLng lPos) {
 			pos = lPos;
+<<<<<<< HEAD
+			marker = mMap.addMarker(new MarkerOptions().position(pos));
+			Drawable myDrawable = getResources().getDrawable(R.drawable.pellet_dot);
+			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
+			marker.setIcon(bmDescriptor);
+			marker.setAnchor(0.5f, 0.5f);
+=======
 			marker = mMap.addMarker(new MarkerOptions()
 					.position(pos)
 					.icon(getBitmap(R.drawable.pellet_dot))
 					.anchor(0.5f, 0.5f));
+
+			Log.d("String", "Pellet created");
+>>>>>>> f2eccba13ce11781d87d8ef667fdab04d8c8e1f0
 		}
 
 		private BitmapDescriptor getBitmap(int id) {
@@ -301,7 +316,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		}
 	}
 	public class Score {
-		//TODO: should score be static
 		public int InitialScore = 0;
 		public int scoreSoFar;
 

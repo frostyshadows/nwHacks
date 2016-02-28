@@ -76,12 +76,12 @@ public class Ghost {
        return pos;
    }
 
-    public void update(LatLng playerPos) {
+    public void update(Marker playerMarker) {
         //TODO: figure out how to find time passed since last pos update and test this code
 
         //calc dist between ghost and player
-        double distX = playerPos.latitude - pos.latitude;
-        double distY = playerPos.longitude - pos.longitude;
+        double distX = playerMarker.getPosition().latitude - pos.latitude;
+        double distY = playerMarker.getPosition().longitude - pos.longitude;
 
         //this code should make the ghost move exactly towards the player
         double speedX = (distX/(Math.abs(distX) + Math.abs(distY))) * speed;
@@ -103,8 +103,8 @@ public class Ghost {
         double playerSizeY = 0.5;
 
 
-        RectF playerRect = new RectF((float)(playerPos.latitude - playerSizeX), (float)(playerPos.longitude - playerSizeY),
-                (float)(playerPos.latitude + playerSizeX), (float)(playerPos.longitude + playerSizeY));
+        RectF playerRect = new RectF((float)(playerMarker.getPosition().latitude - playerSizeX), (float)(playerMarker.getPosition().longitude - playerSizeY),
+                (float)(playerMarker.getPosition().latitude + playerSizeX), (float)(playerMarker.getPosition().longitude + playerSizeY));
 
         RectF ghostRect = new RectF((float)(pos.latitude - ghostSizeX), (float)(pos.longitude - ghostSizeY),
                 (float)(pos.latitude + ghostSizeX), (float)(pos.longitude + ghostSizeY));
