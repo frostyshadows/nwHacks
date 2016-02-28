@@ -32,6 +32,7 @@ import com.google.android.gms.maps.model.Polyline;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -41,6 +42,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	private List<Ghost> ghosts;
 	private Player player;
 	private LocationManager lm;
+	private Timer timer;
 
 
 	@Override
@@ -72,16 +74,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			// for ActivityCompat#requestPermissions for more details.
 			return;
 		}
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, new LocationListener() {
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300, 0, new LocationListener() {
 			@Override
 			public void onLocationChanged(Location location) {
 				Log.d("String", "Location changed");
 				updateText();
 				player.updatePlayer(location.getLatitude(), location.getLongitude());
 
-				for (Ghost next: ghosts){
-					next.update(player.getMarker());
-				}
+
 				// TODO: ghosts should move
 				// TODO: player should move
 				// TODO: ghost should move
@@ -103,6 +103,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 				// TODO Auto-generated method stub
 			}
 		});
+
+		timer = new Timer();
+
+
 	}
 
 
@@ -141,6 +145,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			return;
 		}
 		googleMap.setMyLocationEnabled(true);
+
 	}
 
 //	@Override
@@ -190,7 +195,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		public double distance() {
 			double a = Math.sin(radLatDelta/2) * Math.sin(radLatDelta/2) +
 					Math.cos(radLat1) * Math.cos(radLat2) * Math.sin(radLngDelta/2) * Math.sin(radLngDelta/2);
-			return (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))) * R;
+			return (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))) * R;
 		}
 
 		public double bearing() {
