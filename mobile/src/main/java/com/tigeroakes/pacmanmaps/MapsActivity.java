@@ -209,6 +209,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	public ArrayList<Pellet> placePellets(double spacing, ArrayList<Polyline> paths) {
 		ArrayList<Pellet> pellets = new ArrayList<>();
+		Log.d("PList", "func called");
 		for (Polyline path : paths) {
 			List<LatLng> points = path.getPoints();
 			double distanceLeft = 0;
