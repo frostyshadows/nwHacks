@@ -24,14 +24,11 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.Polyline;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
 
 	private GoogleMap mMap;
 	private TextView textView;
-	private static Score score;
-	private List<Ghost> ghosts;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +41,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		// createTextOverlay();
 		textView = (TextView) findViewById(R.id.score_id);
 		textView.setText("Score: 0");
-
-		score = new Score();
 	}
 
 
@@ -69,20 +64,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		for (int i = 0; i<4; i++) {
 			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap, this.getApplicationContext());
-			ghosts.add(ghost);
 		}
 	}
 
 	@Override
 	public void onLocationChanged(Location location) {
 		updateText();
-		// TODO: ghosts should move
-		// TODO: player should move
+		// TODO: ghost should move
 	}
 
 	public void updateText(){
-		String text = String.valueOf(score.GetScore());
-		textView.setText(text);
+		String text = "";
 	}
 
 	@Override
@@ -190,11 +182,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
 			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
 			marker.setIcon(bmDescriptor);
-
-			marker.setAnchor(0.5f, 0.5f);
+			//TODO: Add anchor
 		}
+
 	}
 	public class Score {
+		//TODO: should score be static
 		public int InitialScore = 0;
 		public int scoreSoFar;
 
@@ -217,8 +210,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		private LatLng pos;
 		public int PointPerPellet = 100;
 
-		public void updatePlayer(){
+		public void EatPellet(Pellet food) {
+
 		}
+
+
 		//TODO: Track player location
 	}
 }
