@@ -1,6 +1,7 @@
 package com.tigeroakes.pacmanmaps;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 			case R.id.new_button:
 			case R.id.how_to_play_button:
 			case R.id.about_button:
+				Intent i = new Intent(this, About.class);
+				startActivity(i);
 			case R.id.settings:
 		}
 
