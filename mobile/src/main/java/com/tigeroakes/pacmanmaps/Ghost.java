@@ -96,6 +96,7 @@ public class Ghost {
         pos.latitude += speedX * timePassedSinceLastUpdate;
         pos.longitude += speedY * timePassedSinceLastUpdate;
         */
+        ghostMarker.setPosition(pos);
 
         //TODO: add collision detection between player and ghost here
         double playerSizeX = 0.5;
@@ -107,6 +108,7 @@ public class Ghost {
 
         RectF ghostRect = new RectF((float)(pos.latitude - ghostSizeX), (float)(pos.longitude - ghostSizeY),
                 (float)(pos.latitude + ghostSizeX), (float)(pos.longitude + ghostSizeY));
+
 
         if (playerRect.contains(ghostRect)) {
             //TODO: add the code that does what should be done when the ghost hits the player here
