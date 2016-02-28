@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -54,7 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		score = new Score();
 		// TODO: 0, 0 shouldn't be the right coordinates
-		player = new Player(mMap, 0, 0);
+
 
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -117,7 +118,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		LatLng ubc = new LatLng(49.262249, -123.249820);
 		mMap.addMarker(new MarkerOptions().position(ubc).title("Marker in UBC"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(ubc));
-
+		player = new Player(mMap, 0, 0);
 		for (int i = 0; i < 4; i++) {
 			Ghost ghost = new Ghost(ubc.longitude - 3, ubc.longitude + 3, ubc.latitude - 3, ubc.latitude + 3, 1, ubc, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
