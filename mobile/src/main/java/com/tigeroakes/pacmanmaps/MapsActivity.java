@@ -1,7 +1,7 @@
 package com.tigeroakes.pacmanmaps;
 
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -9,6 +9,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polygon;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -42,5 +43,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		LatLng sydney = new LatLng(-34, 151);
 		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+	}
+
+	class PlayingArea {
+		public LatLng[] area;
+		public Polygon polygon;
+
+		// Generates playing area for game, based on the starting position.
+		public PlayingArea(LatLng startPos) {
+			//TODO: Replace stub code
+			area = new LatLng[4];
+			area[0] = new LatLng(-123.25207469999998,49.26244859999999);
+			area[1] = new LatLng(-123.2511789,49.261457899999996);
+			area[2] = new LatLng(-123.2495534,49.261773);
+			area[3] = new LatLng(-123.2505405,49.262945699999996);
+		}
+	}
+
+	class Pellets {
+		public class Pellet {
+			public LatLng pos;
+		}
+
+		public Pellet[] list;
+	}
+
+	class Player {
+		private LatLng pos;
 	}
 }
