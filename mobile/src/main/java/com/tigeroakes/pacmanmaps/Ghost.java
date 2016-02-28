@@ -2,7 +2,12 @@ package com.tigeroakes.pacmanmaps;
 
 import android.graphics.RectF;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Random;
 
 /**
  * Logic for ghosts that follow pac-man around
@@ -11,18 +16,48 @@ import com.google.android.gms.maps.model.LatLng;
 public class Ghost {
     private LatLng pos;
     private int speed;
+    private Random random;
+    double ghostSizeX;
+    double ghostSizeY;
+    Marker ghostMarker;
 
-    public Ghost() {
+    public Ghost(double minY, double maxY, double minX, double maxX, double playerRadius, LatLng playerPos, GoogleMap mMap) {
         // Constructor
-        //TODO: make the latlng start a random pos greater than a certain dist away from player and within borders
+        random = new Random();
 
 
+        double ghostX = 0;
+        double ghostY = 0;
+
+        double playerDist;
+        ghostSizeX = 0.5;
+        ghostSizeY = 0.5;
+
+        int cyclesRan = 0;
+        //playerRadius is the minimum distance the ghost can be from the player in order for the ghost to spawn
+
+        do {
+            // makes the ghost a uniformly distributed random position in between minX, maxX for x and minY, maxY for y
+            ghostX = (random.nextDouble() * (maxX - minX)) + minX;
+            ghostY = (random.nextDouble() * (maxY - minY)) + minY;
+
+            pos = new LatLng(ghostX, ghostY);
+            double distX = Math.abs(ghostX - playerPos.latitude);
+            double distY = Math.abs(ghostY - playerPos.longitude);
+            playerDist = Math.sqrt((distX * distX) + (distY * distY));
+            cyclesRan++;
+        } while (playerDist < playerRadius && cyclesRan < 200);
+
+        if (cyclesRan > 200) {
+            //TODO:throw error here because this means that the box radius was probably smaller than the minimum range you can spawn a ghost
+        }
+        // above code should make it so the ghost won't spawn within player radius
+
+        // the marker on the map of the ghost
+        ghostMarker = mMap.addMarker(new MarkerOptions().position(pos).title("Ghost"));
     }
 
     public void update(LatLng playerPos) {
-        //TODO: uncomment out all of this code when can find out how much time has passed since last update and can make ghost and player coords successfully
-        /*
-
         //TODO: figure out how to find time passed since last pos update and test this code
 
         //calc dist between ghost and player
@@ -34,15 +69,19 @@ public class Ghost {
         double speedY = (distY/(Math.abs(distX)+ Math.abs(distY)))* speed;
 
         //this code is placeholder and does not work yet because i dont know how to find the time passed since last update
+        //PLACEHOLDER CODE
+        pos = new LatLng(pos.latitude + speedX, pos.longitude + speedY);
+
+        //REAL CODE SHOULD USE TIMEPASSED LIKE THIS BUT IDK HOW TO DO THAT
+        /*
         pos.latitude += speedX * timePassedSinceLastUpdate;
         pos.longitude += speedY * timePassedSinceLastUpdate;
-
+        */
 
         //TODO: add collision detection between player and ghost here
         double playerSizeX = 0.5;
         double playerSizeY = 0.5;
-        double ghostSizeX = 0.5;
-        double ghostSizeY = 0.5;
+
 
         RectF playerRect = new RectF((float)(playerPos.latitude - playerSizeX), (float)(playerPos.longitude - playerSizeY),
                 (float)(playerPos.latitude + playerSizeX), (float)(playerPos.longitude + playerSizeY));
@@ -55,7 +94,7 @@ public class Ghost {
             //i.e probably remove a life from the player and reset the gamestate
         }
 
-       */
+
     }
 
 

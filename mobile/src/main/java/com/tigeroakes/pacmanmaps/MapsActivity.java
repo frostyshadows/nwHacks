@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
@@ -27,6 +28,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.map);
 		mapFragment.getMapAsync(this);
+		// createTextOverlay();
+
 	}
 
 
@@ -47,6 +50,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		LatLng sydney = new LatLng(-34, 151);
 		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+		for (int i = 0; i<4; i++) {
+			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap);
+		}
 	}
 
 	class PlayingArea {
@@ -69,7 +76,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		//Check if item is within the playing area
 		public boolean withinArea(LatLng marker) {
-			return false;
+			// TODO: make sure area.get(0) and area.get(2) are the correct points, SW and NE
+			LatLngBounds bounds = new LatLngBounds(area.get(0), area.get(2));
+			return bounds.contains(marker);
 		}
 	}
 
