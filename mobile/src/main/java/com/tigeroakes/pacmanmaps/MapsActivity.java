@@ -84,9 +84,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			//TODO: Add icon and anchor
 		}
 	}
+	public class Score {
+		public int InitialScore = 0;
+		public int scoreSoFar;
+
+		public Score() {
+			scoreSoFar = InitialScore;
+		}
+
+		public void AddScore(int score) {
+			scoreSoFar =+ score;
+		}
+
+		public int GetScore() {
+			return scoreSoFar;
+		}
+
+
+	}
 
 	class Player {
 		private LatLng pos;
+		public int PointPerPellet = 100;
+
 
 		//TODO: Track player location
 	}
