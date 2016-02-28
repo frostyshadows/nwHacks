@@ -68,7 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
-
+		ghosts = new ArrayList<Ghost>();
 		// Add a marker in Sydney and move the camera
 		LatLng sydney = new LatLng(-34, 151);
 		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
@@ -78,6 +78,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
 		}
+		Paths paths = new Paths(mMap);
+		placePellets(1, paths.d);
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 			// TODO: Consider calling
 			//    ActivityCompat#requestPermissions
