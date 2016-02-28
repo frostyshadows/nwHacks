@@ -1,11 +1,14 @@
 package com.tigeroakes.pacmanmaps;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
 
@@ -31,6 +34,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	private TextView textView;
 	private static Score score;
 	private List<Ghost> ghosts;
+	private Player player;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		textView.setText("Score: 0");
 
 		score = new Score();
+
 	}
 
 
@@ -66,15 +71,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
-		for (int i = 0; i<4; i++) {
+		for (int i = 0; i < 4; i++) {
 			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
 		}
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+			// TODO: Consider calling
+			//    ActivityCompat#requestPermissions
+			// here to request the missing permissions, and then overriding
+			//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+			//                                          int[] grantResults)
+			// to handle the case where the user grants the permission. See the documentation
+			// for ActivityCompat#requestPermissions for more details.
+			return;
+		}
+		googleMap.setMyLocationEnabled(true);
 	}
 
 	@Override
 	public void onLocationChanged(Location location) {
 		updateText();
+//		for (Ghost next: ghosts){
+//			next.update();
+//		}
 		// TODO: ghosts should move
 		// TODO: player should move
 	}
@@ -160,12 +179,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	}
 
-	class Player {
-		private LatLng pos;
-		public int PointPerPellet = 100;
-
-		public void updatePlayer(){
-		}
-		//TODO: Track player location
-	}
+	// moved it to separate folder
+//	class Player {
+//		private LatLng pos;
+//		public int PointPerPellet = 100; //why isn't this in pellets class instead??
+//
+//		public void updatePlayer(){
+//		}
+//		//TODO: Track player location
+//	}
 }
