@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -54,6 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		mapFragment.getMapAsync(this);
 		// createTextOverlay();
 		textView = (TextView) findViewById(R.id.score_id);
+		textView.setVisibility(View.VISIBLE);
 		textView.setText("Score: 0");
 
 		score = new Score();
@@ -71,7 +73,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			// for ActivityCompat#requestPermissions for more details.
 			return;
 		}
-		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, new LocationListener() {
+		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, new LocationListener() {
 			@Override
 			public void onLocationChanged(Location location) {
 				updateText();
