@@ -127,12 +127,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		public LatLng point1;
 		public LatLng point2;
 
-		double ?1;
-		double ?2;
-		double ?1;
-		double ?2;
-		double ??;
-		double ??;
+		double radLat1;
+		double radLat2;
+		double radLng1;
+		double radLng2;
+		double radLatDelta;
+		double radLngDelta;
 
 		int R = 6371000;
 
@@ -140,25 +140,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			point1 = p1;
 			point2 = p2;
 
-			?1 = Math.toRadians(p1.latitude);
-			?2 = Math.toRadians(p2.latitude);
-			?1 = Math.toRadians(p1.longitude);
-			?2 = Math.toRadians(p2.longitude);
-			?? = Math.toRadians(p2.latitude - p1.latitude);
-			?? = Math.toRadians(p2.longitude - p1.longitude);
+			radLat1 = Math.toRadians(p1.latitude);
+			radLat2 = Math.toRadians(p2.latitude);
+			radLng1 = Math.toRadians(p1.longitude);
+			radLng2 = Math.toRadians(p2.longitude);
+			radLatDelta = Math.toRadians(p2.latitude - p1.latitude);
+			radLngDelta = Math.toRadians(p2.longitude - p1.longitude);
 		}
 
 		public double distance() {
-			double a = Math.sin(??/2) * Math.sin(??/2) +
-					Math.cos(?1) * Math.cos(?2) * Math.sin(??/2) * Math.sin(??/2);
+			double a = Math.sin(radLatDelta/2) * Math.sin(radLatDelta/2) +
+					Math.cos(radLat1) * Math.cos(radLat2) * Math.sin(radLngDelta/2) * Math.sin(radLngDelta/2);
 			return (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))) * R;
 		}
 
 		public double bearing() {
-			double y = Math.sin(?2-?1) * Math.cos(?2);
-			double x = Math.cos(?1) * Math.sin(?2) -
-					Math.sin(?1) * Math.cos(?2) * Math.cos(?2 -?1);
+			double y = Math.sin(radLng2-radLng1) * Math.cos(radLat2);
+			double x = Math.cos(radLat1) * Math.sin(radLat2) -
+					Math.sin(radLat1) * Math.cos(radLat2) * Math.cos(radLng2 - radLng1);
 			return Math.toDegrees(Math.atan2(y, x));
+		}
+
+		public LatLng towards(LatLng start, double brng, double d) {
+			double lat1 = Math.toRadians(start.latitude);
+			double lat2 = Math.asin(Math.sin(lat1)*Math.cos(d/R) +
+					Math.cos(lat1)*Math.sin(d/R)*Math.cos(brng));
+			double lon2 = Math.toRadians(start.longitude) +
+					Math.atan2(Math.sin(brng)*Math.sin(d/R)*Math.cos(lat1),
+					Math.cos(d/R)-Math.sin(lat1)*Math.sin(lat2));
+			return new LatLng(lat2, lon2);
 		}
 	}
 
