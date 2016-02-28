@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
@@ -82,9 +84,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 				for (Ghost next: ghosts){
 					next.update(player.getMarker());
 				}
-				// TODO: ghosts should move
-				// TODO: player should move
-				// TODO: ghost should move
 			}
 
 			@Override
@@ -123,7 +122,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		LatLng ubc = new LatLng(49.262249, -123.249820);
 		mMap.addMarker(new MarkerOptions().position(ubc).title("Marker in UBC"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(ubc));
-		player = new Player(mMap, 0, 0);
+		player = new Player(mMap, 0, 0, getDrawable(R.drawable.pacman));
 		for (int i = 0; i < 4; i++) {
 			Ghost ghost = new Ghost(ubc.longitude - .03, ubc.longitude + .03, ubc.latitude - .03, ubc.latitude + .03, .01, ubc, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
@@ -143,23 +142,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		googleMap.setMyLocationEnabled(true);
 	}
 
-//	@Override
-//	public void onLocationChanged(Location location) {
-//		updateText();
-//		player.updatePlayer(location.getLatitude(), location.getLongitude());
-//
-////		for (Ghost next: ghosts){
-////			next.update();
-////		}
-//		// TODO: ghosts should move
-//		// TODO: player should move
-//		// TODO: ghost should move
-//
-//	}
-
 	public void updateText(){
 		String text = String.valueOf(score.GetScore());
-		textView.setText(text);
+		textView.setText("Score: " + text);
 	}
 
 	public class Navigator {
@@ -283,10 +268,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		public Pellet(LatLng lPos) {
 			pos = lPos;
+
+
+			marker = mMap.addMarker(new MarkerOptions().position(pos));
+			Drawable myDrawable = getResources().getDrawable(R.drawable.pellet_dot);
+			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
+			marker.setIcon(bmDescriptor);
+			marker.setAnchor(0.5f, 0.5f);
+
 			marker = mMap.addMarker(new MarkerOptions()
 					.position(pos)
 					.icon(getBitmap(R.drawable.pellet_dot))
 					.anchor(0.5f, 0.5f));
+
+			Log.d("String", "Pellet created");
 		}
 
 		private BitmapDescriptor getBitmap(int id) {
