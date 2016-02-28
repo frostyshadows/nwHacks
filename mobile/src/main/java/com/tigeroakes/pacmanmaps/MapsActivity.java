@@ -105,6 +105,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	class Player {
 		private LatLng pos;
+		public int PointPerPellet = 100;
+
 
 		//TODO: Track player location
 	}
