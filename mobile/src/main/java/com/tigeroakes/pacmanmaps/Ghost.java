@@ -112,6 +112,7 @@ public class Ghost {
 
 
         if (playerRect.contains(ghostRect)) {
+            Score.getInstance().AddScore(-1000);
             //TODO: add the code that does what should be done when the ghost hits the player here
             //i.e probably remove a life from the player and reset the gamestate
         }

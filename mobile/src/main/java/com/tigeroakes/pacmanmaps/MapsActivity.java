@@ -39,7 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	private GoogleMap mMap;
 	private TextView textView;
-	private static Score score;
+	private Score score;
 	private List<Ghost> ghosts;
 	private Player player;
 	private LocationManager lm;
@@ -59,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		textView.setVisibility(View.VISIBLE);
 		textView.setText("Score: 0");
 
-		score = new Score();
+		score = Score.getInstance();
 		// TODO: 0, 0 shouldn't be the right coordinates
 
 
@@ -104,7 +104,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		});
 	}
 
-
 	/**
 	 * Manipulates the map once available.
 	 * This callback is triggered when the map is ready to be used.
@@ -118,7 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
 		ghosts = new ArrayList<Ghost>();
-		// Add a marker in Sydney and move the camera
+		// Add a marker in UBC and move the camera
 		LatLng ubc = new LatLng(49.262249, -123.249820);
 		mMap.addMarker(new MarkerOptions().position(ubc).title("Marker in UBC"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(ubc));
@@ -300,24 +299,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			return BitmapDescriptorFactory.fromBitmap(bm);
 		}
 	}
-	public class Score {
-		public int InitialScore = 0;
-		public int scoreSoFar;
-
-		public Score() {
-			scoreSoFar = InitialScore;
-		}
-
-		public void AddScore(int score) {
-			scoreSoFar =+ score;
-		}
-
-		public int GetScore() {
-			return scoreSoFar;
-		}
-
-
-	}
+//	public class Score {
+//		public int InitialScore = 0;
+//		public int scoreSoFar;
+//
+//		public Score() {
+//			scoreSoFar = InitialScore;
+//		}
+//
+//		public void AddScore(int score) {
+//			scoreSoFar =+ score;
+//		}
+//
+//		public int GetScore() {
+//			return scoreSoFar;
+//		}
+//
+//
+//	}
 
 
 	// moved it to separate folder
