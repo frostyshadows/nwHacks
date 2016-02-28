@@ -1,5 +1,4 @@
 <resources>
 	<string name="app_name">Pac Man Maps</string>
-	<string name="hello_round">Hello Round World!</string>
-	<string name="hello_square">Hello Square World!</string>
+	<string name="score_label">Score</string>
 </resources>
