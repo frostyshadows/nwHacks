@@ -6,7 +6,15 @@
 	<string name="settings_label">Settings</string>
 	<string name="action_settings">Action Settings</string>
 	<string name="title_activity_maps">Idk</string>
-	<string name="about_text">created by the hacker squad at nwhacks :D</string>
-	<string name="how_to_play_text">You're PacMan and you're being chased by ghosts</string>
+	<string name="about_text">Say goodbye to the good old plain Pac Man game on the screen! It's time to spice things up and
+		get some real life action going! What better ways to go on a litter adventure around your neightboardhood
+		and excercise at the same time? Brought to you by our team Pac Man Run, the new innovative way of life and entertainment!</string>
+	<string name="how_to_play_text">Congratulations, you're now Pac Man, so get up and start moving! Your goal, not surprisingly, is to
+	eat the marked food pellets on the map by physically travelling to the location
+		without being caught by the moving ghosts. Meaning the higher your score,
+		the more Pac Man Run approved you are. For each pellet that you attain, your score increases. If you are caught by a ghost,
+		you have full lives to start the game again without forgoing your current score. When the game is over, your total distance
+	travelled will be displayed along with your score, and the game shall start with a score of zero should you choose to continue
+	playing. Happy Pac Man Running!</string>
 	<string name="score_text">Score:</string>
 </resources>
