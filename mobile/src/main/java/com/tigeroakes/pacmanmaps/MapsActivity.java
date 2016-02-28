@@ -15,13 +15,10 @@ import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
 	private GoogleMap mMap;
-	private List<Ghost> ghosts;
-	private List<Marker> ghostMarkers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,22 +50,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		LatLng sydney = new LatLng(-34, 151);
 		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-<<<<<<< HEAD
-		for (int i = 0; i < 4; i++){
-			// TODO: figure out arguments!!
-			Ghost ghost = new Ghost(0, 0, 0, 0, 0, new LatLng(0, 0));
-			Marker marker = mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-			marker.setPosition(ghost.getLatLng());
-			marker.setIcon(R.mipmap.ghost);
-
-		}
-
-=======
 
 		for (int i = 0; i<4; i++) {
 			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap);
 		}
->>>>>>> b5f240b841e663c860858d1e9af756c82e7b9932
 	}
 
 	class PlayingArea {
@@ -124,24 +109,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			return scoreSoFar;
 		}
 
-		//public boolean checkIfOver() {
 
-
-
-
-	}
-
-	public class Life{
-		private int initialLife = 3;
-		private int lifeLeft;
-
-		public Life(){
-			lifeLeft = initialLife;
-		}
-
-		public int getLifeleft(){
-			return lifeLeft;
-		}
 	}
 
 	class Player {
