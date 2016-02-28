@@ -84,9 +84,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 				for (Ghost next: ghosts){
 					next.update(player.getMarker());
 				}
-				// TODO: ghosts should move
-				// TODO: player should move
-				// TODO: ghost should move
 			}
 
 			@Override
@@ -125,7 +122,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		LatLng ubc = new LatLng(49.262249, -123.249820);
 		mMap.addMarker(new MarkerOptions().position(ubc).title("Marker in UBC"));
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(ubc));
-		player = new Player(mMap, 0, 0);
+		player = new Player(mMap, 0, 0, getDrawable(R.drawable.pacman));
 		for (int i = 0; i < 4; i++) {
 			Ghost ghost = new Ghost(ubc.longitude - .03, ubc.longitude + .03, ubc.latitude - .03, ubc.latitude + .03, .01, ubc, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
@@ -144,20 +141,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		}
 		googleMap.setMyLocationEnabled(true);
 	}
-
-//	@Override
-//	public void onLocationChanged(Location location) {
-//		updateText();
-//		player.updatePlayer(location.getLatitude(), location.getLongitude());
-//
-////		for (Ghost next: ghosts){
-////			next.update();
-////		}
-//		// TODO: ghosts should move
-//		// TODO: player should move
-//		// TODO: ghost should move
-//
-//	}
 
 	public void updateText(){
 		String text = String.valueOf(score.GetScore());

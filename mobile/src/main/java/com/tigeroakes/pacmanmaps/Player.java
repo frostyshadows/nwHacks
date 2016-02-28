@@ -1,8 +1,13 @@
 package com.tigeroakes.pacmanmaps;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -12,12 +17,17 @@ import com.google.android.gms.maps.model.MarkerOptions;
  */
 public class Player {
     private LatLng pos;
-    public int PointPerPellet = 100; //why isn't this in pellets class instead??
+    public int pointPerPellet = 100;
     private Marker marker;
 
-    public Player(GoogleMap gmap, double lat, double lng) {
+    public Player(GoogleMap gmap, double lat, double lng, Drawable drawable) {
         pos = new LatLng(lat, lng);
         marker = gmap.addMarker(new MarkerOptions().position(pos).title("Player"));
+        Drawable myDrawable = drawable;
+        Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
+        BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
+        marker.setIcon(bmDescriptor);
+        marker.setAnchor(0.5f, 0.5f);
     }
 
     public Marker getMarker() {
@@ -28,4 +38,5 @@ public class Player {
         LatLng latLng = new LatLng(lat, lng);
         marker.setPosition(latLng);
     }
+
 }
