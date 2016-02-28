@@ -75,6 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		for (int i = 0; i < 4; i++) {
 			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap, this.getApplicationContext());
+			ghosts.add(ghost);
 		}
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 			// TODO: Consider calling
@@ -103,7 +104,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	}
 
 	public void updateText(){
-		String text = "";
+		String text = String.valueOf(score.GetScore());
 	}
 
 	@Override
