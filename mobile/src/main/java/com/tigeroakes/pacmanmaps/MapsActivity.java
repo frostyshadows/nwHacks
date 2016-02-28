@@ -62,10 +62,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	class Pellets {
 		public class Pellet {
-			private LatLng pos;
+			public LatLng pos;
 		}
 
-		private Pellet[] mPellets;
+		public Pellet[] list;
 	}
 
 	class Player {
