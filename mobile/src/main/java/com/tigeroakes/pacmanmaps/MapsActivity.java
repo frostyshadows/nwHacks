@@ -47,6 +47,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.d("String", "Created map");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_maps);
 		// Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -76,6 +77,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 0, new LocationListener() {
 			@Override
 			public void onLocationChanged(Location location) {
+				Log.d("String", "Location changed");
 				updateText();
 				player.updatePlayer(location.getLatitude(), location.getLongitude());
 
@@ -129,7 +131,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			ghosts.add(ghost);
 		}
 		Paths paths = new Paths(mMap);
-		placePellets(1, paths.d);
+		placePellets(3, paths.d);
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 			// TODO: Consider calling
 			//    ActivityCompat#requestPermissions
@@ -209,18 +211,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 					Math.cos(d/R)-Math.sin(lat1)*Math.sin(lat2));
 			return new LatLng(Math.toDegrees(lat2), Math.toDegrees(lon2));
 		}
+
+		public LatLng middle(double dist) {
+			double distance = this.distance();
+			double percent = dist / distance;
+			double x = point1.latitude + percent*(point2.latitude-point1.latitude);
+			double y = point1.longitude + percent*(point2.longitude-point1.longitude);
+			return new LatLng(x, y);
+		}
 	}
 
 	public ArrayList<Pellet> placePellets(double spacing, ArrayList<Polyline> paths) {
 		ArrayList<Pellet> pellets = new ArrayList<>();
 		Log.d("PList", "func called");
 		for (Polyline path : paths) {
+			Log.d("Path", path.getPoints().get(0).toString());
 			List<LatLng> points = path.getPoints();
-			double distanceLeft = 0;
+			//double distanceLeft = 0;
 			for (int i = 1; i < points.size(); i++) {
+				Log.d("PP", points.get(i).toString());
 				Navigator n = new Navigator(points.get(i - 1), points.get(i));
 				double distance = n.distance();
-				if (distanceLeft < distance) {
+				/*if (distanceLeft < distance) {
 					double d = distance - distanceLeft;
 					LatLng lastPoint = (distanceLeft == 0) ?
 							n.point1 : n.towards(n.point1, n.bearing(), distanceLeft);
@@ -231,6 +243,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 						pellets.add(new Pellet(lastPoint));
 					}
 					distanceLeft = d;
+				}*/
+				double pelletsHere = Math.floor(distance / spacing);
+				for (double spot = 0; spot < pelletsHere; spot+=1) {
+					pellets.add(new Pellet(n.middle(spot * spacing)));
 				}
 			}
 		}
@@ -269,6 +285,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		public Pellet(LatLng lPos) {
 			pos = lPos;
+
 
 			marker = mMap.addMarker(new MarkerOptions().position(pos));
 			Drawable myDrawable = getResources().getDrawable(R.drawable.pellet_dot);
