@@ -4,8 +4,10 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.VectorDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -55,7 +57,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		score = new Score();
 		// TODO: 0, 0 shouldn't be the right coordinates
-		player = new Player(mMap, 0, 0);
+
 
 		lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -113,16 +115,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		mMap = googleMap;
-
+		ghosts = new ArrayList<Ghost>();
 		// Add a marker in Sydney and move the camera
-		LatLng sydney = new LatLng(-34, 151);
-		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-
+		LatLng ubc = new LatLng(49.262249, -123.249820);
+		mMap.addMarker(new MarkerOptions().position(ubc).title("Marker in UBC"));
+		mMap.moveCamera(CameraUpdateFactory.newLatLng(ubc));
+		player = new Player(mMap, 0, 0);
 		for (int i = 0; i < 4; i++) {
-			Ghost ghost = new Ghost(sydney.longitude - 3, sydney.longitude + 3, sydney.latitude - 3, sydney.latitude + 3, 1, sydney, mMap, this.getApplicationContext());
+			Ghost ghost = new Ghost(ubc.longitude - 3, ubc.longitude + 3, ubc.latitude - 3, ubc.latitude + 3, 1, ubc, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
 		}
+		Paths paths = new Paths(mMap);
+		placePellets(1, paths.d);
 		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 			// TODO: Consider calling
 			//    ActivityCompat#requestPermissions
@@ -261,8 +265,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		public Pellet(LatLng lPos) {
 			pos = lPos;
-			marker = mMap.addMarker(new MarkerOptions()
-					.position(pos));
+			marker = mMap.addMarker(new MarkerOptions().position(pos));
 			Drawable myDrawable = getResources().getDrawable(R.drawable.pellet_dot);
 			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
 			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
@@ -270,6 +273,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			marker.setAnchor(0.5f, 0.5f);
 		}
 
+		private BitmapDescriptor getBitmap(int id) {
+			VectorDrawable vectorDrawable = (VectorDrawable) getDrawable(id);
+
+			int h = vectorDrawable.getIntrinsicHeight();
+			int w = vectorDrawable.getIntrinsicWidth();
+
+			vectorDrawable.setBounds(0, 0, w, h);
+
+			Bitmap bm = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+			Canvas canvas = new Canvas(bm);
+			vectorDrawable.draw(canvas);
+
+			return BitmapDescriptorFactory.fromBitmap(bm);
+		}
 	}
 	public class Score {
 		public int InitialScore = 0;

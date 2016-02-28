@@ -14,6 +14,7 @@ public class Paths {
 	public ArrayList<Polyline> d;
 
 	public Paths(GoogleMap map) {
+		d = new ArrayList<Polyline>();
 		d.add(map.addPolyline(new PolylineOptions().add(
 				new LatLng(-123.25037, 49.26204),
 				new LatLng(-123.25058, 49.26201),

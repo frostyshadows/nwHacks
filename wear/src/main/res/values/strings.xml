@@ -1,4 +1,5 @@
 <resources>
 	<string name="app_name">Pac Man Maps</string>
 	<string name="score_label">Score</string>
+	<string name="hello_round">hello_round</string>
 </resources>
