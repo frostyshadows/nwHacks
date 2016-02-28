@@ -1,5 +1,6 @@
 package com.tigeroakes.pacmanmaps;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -64,7 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		//Check if item is within the playing area
 		public boolean withinArea(LatLng marker) {
-
+			return false;
 		}
 	}
 
