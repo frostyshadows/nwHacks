@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+import com.google.android.gms.maps.model.Polyline;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +98,58 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 	@Override
 	public void onProviderDisabled(String provider) {
 
+	}
+
+	public class Navigator {
+		public LatLng point1;
+		public LatLng point2;
+
+		double ?1;
+		double ?2;
+		double ?1;
+		double ?2;
+		double ??;
+		double ??;
+
+		int R = 6371000;
+
+		public Navigator(LatLng p1, LatLng p2) {
+			point1 = p1;
+			point2 = p2;
+
+			?1 = Math.toRadians(p1.latitude);
+			?2 = Math.toRadians(p2.latitude);
+			?1 = Math.toRadians(p1.longitude);
+			?2 = Math.toRadians(p2.longitude);
+			?? = Math.toRadians(p2.latitude - p1.latitude);
+			?? = Math.toRadians(p2.longitude - p1.longitude);
+		}
+
+		public double distance() {
+			double a = Math.sin(??/2) * Math.sin(??/2) +
+					Math.cos(?1) * Math.cos(?2) * Math.sin(??/2) * Math.sin(??/2);
+			return (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))) * R;
+		}
+
+		public double bearing() {
+			double y = Math.sin(?2-?1) * Math.cos(?2);
+			double x = Math.cos(?1) * Math.sin(?2) -
+					Math.sin(?1) * Math.cos(?2) * Math.cos(?2 -?1);
+			return Math.toDegrees(Math.atan2(y, x));
+		}
+	}
+
+	public ArrayList<Pellet> placePellets(double spacing, ArrayList<Polyline> paths) {
+		ArrayList<Pellet> pellets;
+		for (Polyline path : paths) {
+			List<LatLng> points = path.getPoints();
+			double distanceLeft = 0;
+			for (int i = 1; i < points.size(); i++) {
+				Navigator n = new Navigator(points.get(i - 1), points.get(i));
+				
+			}
+		}
+		return pellets;
 	}
 
 	class PlayingArea {
