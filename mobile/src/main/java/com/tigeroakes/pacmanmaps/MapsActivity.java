@@ -159,7 +159,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 	public void updateText(){
 		String text = String.valueOf(score.GetScore());
-		textView.setText(text);
+		textView.setText("Score: " + text);
 	}
 
 	public class Navigator {
@@ -269,21 +269,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		public Pellet(LatLng lPos) {
 			pos = lPos;
-<<<<<<< HEAD
+
 			marker = mMap.addMarker(new MarkerOptions().position(pos));
 			Drawable myDrawable = getResources().getDrawable(R.drawable.pellet_dot);
 			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
 			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
 			marker.setIcon(bmDescriptor);
 			marker.setAnchor(0.5f, 0.5f);
-=======
+
 			marker = mMap.addMarker(new MarkerOptions()
 					.position(pos)
 					.icon(getBitmap(R.drawable.pellet_dot))
 					.anchor(0.5f, 0.5f));
 
 			Log.d("String", "Pellet created");
->>>>>>> f2eccba13ce11781d87d8ef667fdab04d8c8e1f0
 		}
 
 		private BitmapDescriptor getBitmap(int id) {
