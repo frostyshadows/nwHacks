@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -74,9 +75,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 				updateText();
 				player.updatePlayer(location.getLatitude(), location.getLongitude());
 
-//		for (Ghost next: ghosts){
-//			next.update();
-//		}
+				for (Ghost next: ghosts){
+					next.update(player.getMarker());
+				}
 				// TODO: ghosts should move
 				// TODO: player should move
 				// TODO: ghost should move
@@ -120,7 +121,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 		mMap.moveCamera(CameraUpdateFactory.newLatLng(ubc));
 		player = new Player(mMap, 0, 0);
 		for (int i = 0; i < 4; i++) {
-			Ghost ghost = new Ghost(ubc.longitude - 3, ubc.longitude + 3, ubc.latitude - 3, ubc.latitude + 3, 1, ubc, mMap, this.getApplicationContext());
+			Ghost ghost = new Ghost(ubc.longitude - .03, ubc.longitude + .03, ubc.latitude - .03, ubc.latitude + .03, .01, ubc, mMap, this.getApplicationContext());
 			ghosts.add(ghost);
 		}
 		Paths paths = new Paths(mMap);
@@ -267,6 +268,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 					.position(pos)
 					.icon(getBitmap(R.drawable.pellet_dot))
 					.anchor(0.5f, 0.5f));
+
+			Log.d("String", "Pellet created");
 		}
 
 		private BitmapDescriptor getBitmap(int id) {

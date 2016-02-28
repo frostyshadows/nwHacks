@@ -20,6 +20,10 @@ public class Player {
         marker = gmap.addMarker(new MarkerOptions().position(pos).title("Player"));
     }
 
+    public Marker getMarker() {
+        return marker;
+    }
+
     public void updatePlayer(double lat, double lng) {
         LatLng latLng = new LatLng(lat, lng);
         marker.setPosition(latLng);
