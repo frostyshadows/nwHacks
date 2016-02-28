@@ -8,6 +8,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 
@@ -58,11 +59,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			area[2] = new LatLng(-123.2495534,49.261773);
 			area[3] = new LatLng(-123.2505405,49.262945699999996);
 		}
+
+		public boolean withinArea(LatLng marker) {
+
+		}
 	}
 
 	class Pellets {
 		public class Pellet {
 			public LatLng pos;
+			public Marker marker;
+
+			public Pellet(LatLng lPos) {
+				pos = lPos;
+				marker = mMap.addMarker(new MarkerOptions()
+				                              .position(pos));
+			}
 		}
 
 		public Pellet[] list;
