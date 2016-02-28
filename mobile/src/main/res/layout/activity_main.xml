@@ -39,7 +39,7 @@
 					android:text="@string/about_label"/>
 				<Button
 					android:id="@+id/settings"
-					android:text="#string/settings_label"/>
+					android:text="@string/settings_label"/>
 			</TableRow>
 		</TableLayout>
 	</LinearLayout>
