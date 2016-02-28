@@ -149,10 +149,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			return scoreSoFar;
 		}
 
-		public int setScore(int score){
-			scoreSoFar = score;
-		}
-
 
 	}
 
