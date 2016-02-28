@@ -200,18 +200,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			double lon2 = Math.toRadians(start.longitude) +
 					Math.atan2(Math.sin(brng)*Math.sin(d/R)*Math.cos(lat1),
 					Math.cos(d/R)-Math.sin(lat1)*Math.sin(lat2));
-			return new LatLng(lat2, lon2);
+			return new LatLng(Math.toDegrees(lat2), Math.toDegrees(lon2));
 		}
 	}
 
 	public ArrayList<Pellet> placePellets(double spacing, ArrayList<Polyline> paths) {
-		ArrayList<Pellet> pellets = new ArrayList<Pellet>();
+		ArrayList<Pellet> pellets = new ArrayList<>();
 		for (Polyline path : paths) {
 			List<LatLng> points = path.getPoints();
 			double distanceLeft = 0;
 			for (int i = 1; i < points.size(); i++) {
 				Navigator n = new Navigator(points.get(i - 1), points.get(i));
-				
+				double distance = n.distance();
+				if (distanceLeft < distance) {
+					double d = distance - distanceLeft;
+					LatLng lastPoint = (distanceLeft == 0) ?
+							n.point1 : n.towards(n.point1, n.bearing(), distanceLeft);
+					pellets.add(new Pellet(lastPoint));
+					while (d > spacing) {
+						d -= spacing;
+						lastPoint = n.towards(lastPoint, n.bearing(), d);
+						pellets.add(new Pellet(lastPoint));
+					}
+					distanceLeft = d;
+				}
 			}
 		}
 		return pellets;
