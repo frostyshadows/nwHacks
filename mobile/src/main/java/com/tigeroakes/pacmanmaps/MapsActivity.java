@@ -267,12 +267,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			Bitmap anImage = ((BitmapDrawable) myDrawable).getBitmap();
 			BitmapDescriptor bmDescriptor = BitmapDescriptorFactory.fromBitmap(anImage);
 			marker.setIcon(bmDescriptor);
-			//TODO: Add anchor
+			marker.setAnchor(0.5f, 0.5f);
 		}
 
 	}
 	public class Score {
-		//TODO: should score be static
 		public int InitialScore = 0;
 		public int scoreSoFar;
 
