@@ -64,7 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 		//Check if item is within the playing area
 		public boolean withinArea(LatLng marker) {
-
+			return false;
 		}
 	}
 
