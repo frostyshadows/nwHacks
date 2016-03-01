@@ -140,11 +140,13 @@ public class Ghost extends Activity{
                 (float)(pos.latitude + ghostSizeX), (float)(pos.longitude + ghostSizeY));
 
 
-        if (playerRect.contains(ghostRect)) {
+
+
+        if (playerRect.intersect(ghostRect)) {
             Score.getInstance().AddScore(-1000);
-            //TODO: add the code that does what should be done when the ghost hits the player here
-            //i.e probably remove a life from the player and reset the gamestate
+            Log.d("String", "hit ghost");
         }
+
 
 
     }
