@@ -145,6 +145,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 			return;
 		}
 		googleMap.setMyLocationEnabled(true);
+		mMap.animateCamera(CameraUpdateFactory.zoomTo(17.0f));
+
 
 	}
 
