@@ -29,16 +29,27 @@ public class Ghost extends Activity{
     private LatLng pos;
     private double speed;
     private Random random;
+    private boolean isActive;
     double ghostSizeX;
     double ghostSizeY;
     Marker ghostMarker;
     Context context;
     LatLng playerPosition;
+    private double storedPlayerRadius;
+    private double storedMaxX;
+    private double storedMaxY;
+    private double storedMinX;
+    private double storedMinY;
     Timer timer;
 
     public Ghost(double minY, double maxY, double minX, double maxX, double playerRadius, LatLng playerPos, GoogleMap mMap
     , Context context) {
         // Constructor
+        storedPlayerRadius = playerRadius; // stores player radius for future use in resetPosition
+        storedMaxX = maxX;
+        storedMaxY = maxY;
+        storedMinX = minX;
+        storedMinY = minY;
         random = new Random();
         speed = (0.01)/ 15;
         timer = new Timer();
@@ -47,8 +58,9 @@ public class Ghost extends Activity{
         double ghostY = 0;
 
         double playerDist;
-        ghostSizeX = 0.5;
-        ghostSizeY = 0.5;
+        ghostSizeX = 0.0002;
+        ghostSizeY = 0.0002;
+
 
         this.context = context;
         playerPosition = playerPos;
@@ -105,6 +117,36 @@ public class Ghost extends Activity{
        return pos;
    }
 
+    public void resetPosition() {
+        //this function simply resets the ghost to a new random valid spawn location after it comes in contact with the player.
+        double ghostX = 0;
+        double ghostY = 0;
+
+        double playerDist;
+
+        this.context = context;
+        int cyclesRan = 0;
+        //playerRadius is the minimum distance the ghost can be from the player in order for the ghost to spawn
+
+
+        do {
+            // makes the ghost a uniformly distributed random position in between minX, maxX for x and minY, maxY for y
+            ghostX = (random.nextDouble() * (storedMaxX - storedMinX)) + storedMinX;
+            ghostY = (random.nextDouble() * (storedMaxY - storedMinY)) + storedMinY;
+
+            pos = new LatLng(ghostX, ghostY);
+            double distX = Math.abs(ghostX - playerPosition.latitude);
+            double distY = Math.abs(ghostY - playerPosition.longitude);
+            playerDist = Math.sqrt((distX * distX) + (distY * distY));
+            cyclesRan++;
+        } while (playerDist < storedPlayerRadius && cyclesRan < 200);
+
+        if (cyclesRan > 200) {
+            //TODO:throw error here because this means that the box radius was probably smaller than the minimum range you can spawn a ghost
+        }
+
+        ghostMarker.setPosition(pos);
+    }
     public void update() {
         //TODO: figure out how to find time passed since last pos update and test this code
 
@@ -129,8 +171,8 @@ public class Ghost extends Activity{
         ghostMarker.setPosition(pos);
 
         //TODO: add collision detection between player and ghost here
-        double playerSizeX = 0.5;
-        double playerSizeY = 0.5;
+        double playerSizeX = 0.0002;
+        double playerSizeY = 0.0002;
 
 
         RectF playerRect = new RectF((float)(playerPosition.latitude - playerSizeX), (float)(playerPosition.longitude - playerSizeY),
@@ -145,7 +187,11 @@ public class Ghost extends Activity{
         if (playerRect.intersect(ghostRect)) {
             Score.getInstance().AddScore(-1000);
             Log.d("String", "hit ghost");
+            isActive = false;
+            resetPosition();
         }
+
+
 
 
 
